@@ -1,1 +1,1518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Locale 2034 - 50 ans d'histoire, 50 ans d'avenir</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.cdnfonts.com/css/glacial-indifference-2');
+        
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: 
+                linear-gradient(45deg, rgba(214, 11, 82, 0.1) 0%, rgba(149, 193, 31, 0.1) 100%),
+                repeating-linear-gradient(
+                    90deg,
+                    #2a2a2a 0px,
+                    #2a2a2a 2px,
+                    #333 2px,
+                    #333 4px
+                ),
+                #171718;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(214, 11, 82, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(243, 146, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(40, 151, 213, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .game-container {
+                padding: 20px;
+            }
+        }
+
+        .screen {
+            display: none;
+            background: 
+                linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0,0,0,0.02) 2px,
+                    rgba(0,0,0,0.02) 4px
+                );
+            border: 2px solid #171718;
+            border-radius: 0;
+            padding: 15px;
+            box-shadow: 
+                4px 4px 0px #d60b52,
+                8px 8px 0px rgba(0,0,0,0.3),
+                inset 0 0 0 1px #fff;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        @media (min-width: 768px) {
+            .screen {
+                border: 3px solid #171718;
+                padding: 40px;
+                box-shadow: 
+                    8px 8px 0px #d60b52,
+                    16px 16px 0px rgba(0,0,0,0.3),
+                    inset 0 0 0 2px #fff;
+                margin: 20px 0;
+            }
+        }
+        
+        .screen::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    #333 0px,
+                    #333 1px,
+                    transparent 1px,
+                    transparent 20px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    #333 0px,
+                    #333 1px,
+                    transparent 1px,
+                    transparent 20px
+                );
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            background: 
+                linear-gradient(135deg, #333 0%, #171718 100%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(214, 11, 82, 0.1) 10px,
+                    rgba(214, 11, 82, 0.1) 20px
+                );
+            color: #f8f8f8;
+            border: 4px solid #d60b52;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-screen::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: #f39200;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            opacity: 0.8;
+        }
+
+        .welcome-screen h1 {
+            font-family: 'Glacial Indifference', 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 
+                2px 2px 0px #d60b52,
+                4px 4px 0px rgba(0,0,0,0.3),
+                1px 1px 0px #f39200;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+            line-height: 1.1;
+        }
+        
+        @media (min-width: 768px) {
+            .welcome-screen h1 {
+                font-size: 4em;
+                text-shadow: 
+                    4px 4px 0px #d60b52,
+                    8px 8px 0px rgba(0,0,0,0.3),
+                    2px 2px 0px #f39200;
+            }
+        }
+
+        .welcome-screen p {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+        
+        @media (min-width: 768px) {
+            .welcome-screen p {
+                font-size: 1.4em;
+                margin-bottom: 30px;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            }
+        }
+
+        .start-btn {
+            font-family: 'Glacial Indifference', 'Nunito', sans-serif;
+            font-weight: 700;
+            background: 
+                linear-gradient(135deg, #f39200 0%, #d60b52 100%);
+            color: #171718;
+            border: 3px solid #171718;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 
+                4px 4px 0px #95c11f,
+                8px 8px 0px rgba(0,0,0,0.3);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        @media (min-width: 768px) {
+            .start-btn {
+                border: 4px solid #171718;
+                padding: 20px 40px;
+                font-size: 1.6em;
+                box-shadow: 
+                    6px 6px 0px #95c11f,
+                    12px 12px 0px rgba(0,0,0,0.3);
+                width: auto;
+            }
+        }
+        
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .start-btn:hover {
+            background: linear-gradient(135deg, #d60b52 0%, #f39200 100%);
+            transform: translate(-3px, -3px);
+            box-shadow: 
+                9px 9px 0px #95c11f,
+                18px 18px 0px rgba(0,0,0,0.4);
+        }
+        
+        .start-btn:hover::before {
+            left: 100%;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .scenario-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                margin-top: 30px;
+            }
+        }
+
+        .scenario-card {
+            background: 
+                linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            color: #171718;
+            padding: 20px;
+            border: 2px solid #171718;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            box-shadow: 
+                3px 3px 0px #d60b52,
+                6px 6px 0px rgba(0,0,0,0.2);
+            position: relative;
+            transform: rotate(-1deg);
+            touch-action: manipulation;
+        }
+        
+        @media (min-width: 768px) {
+            .scenario-card {
+                padding: 25px;
+                border: 3px solid #171718;
+                box-shadow: 
+                    5px 5px 0px #d60b52,
+                    10px 10px 0px rgba(0,0,0,0.2);
+            }
+        }
+        
+        .scenario-card:nth-child(even) {
+            transform: rotate(1deg);
+            box-shadow: 
+                5px 5px 0px #95c11f,
+                10px 10px 0px rgba(0,0,0,0.2);
+        }
+        
+        .scenario-card:nth-child(3n) {
+            box-shadow: 
+                5px 5px 0px #f39200,
+                10px 10px 0px rgba(0,0,0,0.2);
+        }
+        
+        .scenario-card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #d60b52;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .scenario-card:hover {
+            transform: rotate(0deg) translate(-3px, -3px);
+            box-shadow: 
+                8px 8px 0px #d60b52,
+                16px 16px 0px rgba(0,0,0,0.3);
+        }
+        
+        .scenario-card:nth-child(even):hover {
+            box-shadow: 
+                8px 8px 0px #95c11f,
+                16px 16px 0px rgba(0,0,0,0.3);
+        }
+        
+        .scenario-card:nth-child(3n):hover {
+            box-shadow: 
+                8px 8px 0px #f39200,
+                16px 16px 0px rgba(0,0,0,0.3);
+        }
+
+        .scenario-card h3 {
+            font-family: 'Glacial Indifference', 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            letter-spacing: 0.01em;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0px rgba(214, 11, 82, 0.3);
+        }
+
+        .scenario-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .scenario-icon {
+                font-size: 3em;
+                margin-bottom: 15px;
+            }
+        }
+
+        .game-board {
+            position: relative;
+            background: 
+                linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(0,0,0,0.05) 40px,
+                    rgba(0,0,0,0.05) 42px
+                );
+            border: 2px solid #171718;
+            border-radius: 0;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 
+                inset 0 0 0 2px #fff,
+                4px 4px 0px #95c11f;
+        }
+        
+        @media (min-width: 768px) {
+            .game-board {
+                border: 4px solid #171718;
+                padding: 40px;
+                margin: 20px 0;
+                box-shadow: 
+                    inset 0 0 0 4px #fff,
+                    8px 8px 0px #95c11f;
+            }
+        }
+
+        .board-path {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .board-path {
+                margin: 40px 0;
+                flex-wrap: nowrap;
+                gap: 0;
+            }
+        }
+
+        .board-path::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    #d60b52 0px,
+                    #d60b52 20px,
+                    #f39200 20px,
+                    #f39200 40px,
+                    #95c11f 40px,
+                    #95c11f 60px
+                );
+            z-index: 1;
+            border: 2px solid #171718;
+        }
+
+        .step {
+            background: #f8f8f8;
+            border: 2px solid #171718;
+            border-radius: 0;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 2;
+            position: relative;
+            box-shadow: 
+                2px 2px 0px #ccc,
+                4px 4px 0px rgba(0,0,0,0.2);
+            transform: rotate(-2deg);
+            touch-action: manipulation;
+            flex: 1;
+            min-width: 70px;
+        }
+        
+        @media (min-width: 768px) {
+            .step {
+                border: 4px solid #171718;
+                width: 120px;
+                height: 120px;
+                box-shadow: 
+                    4px 4px 0px #ccc,
+                    8px 8px 0px rgba(0,0,0,0.2);
+                flex: none;
+            }
+        }
+        
+        .step:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .step:hover {
+            transform: rotate(0deg) translate(-2px, -2px);
+            box-shadow: 
+                6px 6px 0px #d60b52,
+                12px 12px 0px rgba(0,0,0,0.3);
+        }
+
+        .step.completed {
+            background: #95c11f;
+            border-color: #171718;
+            color: #171718;
+            box-shadow: 
+                4px 4px 0px #171718,
+                8px 8px 0px rgba(0,0,0,0.3);
+        }
+        
+        .step.completed::after {
+            content: '✓';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #d60b52;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 2px solid #171718;
+        }
+
+        .step.active {
+            background: #f39200;
+            border-color: #171718;
+            color: #171718;
+            animation: streetPulse 2s infinite;
+            box-shadow: 
+                4px 4px 0px #d60b52,
+                8px 8px 0px rgba(0,0,0,0.3);
+        }
+
+        @keyframes streetPulse {
+            0% { 
+                transform: rotate(-2deg) scale(1);
+                box-shadow: 4px 4px 0px #d60b52, 8px 8px 0px rgba(0,0,0,0.3);
+            }
+            50% { 
+                transform: rotate(2deg) scale(1.05);
+                box-shadow: 6px 6px 0px #d60b52, 12px 12px 0px rgba(0,0,0,0.4);
+            }
+            100% { 
+                transform: rotate(-2deg) scale(1);
+                box-shadow: 4px 4px 0px #d60b52, 8px 8px 0px rgba(0,0,0,0.3);
+            }
+        }
+
+        .step-icon {
+            font-size: 1.5em;
+            margin-bottom: 2px;
+            filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.3));
+        }
+
+        .step-label {
+            font-family: 'Glacial Indifference', 'Nunito', sans-serif;
+            font-size: 0.6em;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+            line-height: 1.1;
+        }
+        
+        @media (min-width: 768px) {
+            .step-icon {
+                font-size: 2.2em;
+                margin-bottom: 5px;
+                filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.3));
+            }
+            
+            .step-label {
+                font-size: 0.8em;
+            }
+        }
+
+        .card-display {
+            background: 
+                linear-gradient(135deg, #171718 0%, #333 100%);
+            color: #f8f8f8;
+            padding: 30px;
+            border: 4px solid #d60b52;
+            border-radius: 0;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 
+                8px 8px 0px #f39200,
+                16px 16px 0px rgba(0,0,0,0.3);
+            position: relative;
+            transform: rotate(-1deg);
+        }
+        
+        .card-display::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            width: 40px;
+            height: 20px;
+            background: #95c11f;
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+        }
+
+        .card-display h3 {
+            font-family: 'Glacial Indifference', 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 2em;
+            margin-bottom: 15px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            text-shadow: 
+                3px 3px 0px #d60b52,
+                6px 6px 0px rgba(0,0,0,0.3);
+        }
+
+        .card-display p {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.3em;
+            line-height: 1.6;
+            font-weight: 500;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .action-area {
+            background: #f8f9fa;
+            border: 3px dashed #4A90E2;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .action-textarea {
+            width: 100%;
+            min-height: 120px;
+            border: 2px solid #50E3C2;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 1em;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 400;
+            line-height: 1.5;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        
+        @media (min-width: 768px) {
+            .action-textarea {
+                min-height: 150px;
+                padding: 15px;
+                font-size: 1.1em;
+                line-height: 1.6;
+            }
+        }
+
+        .debrief-wall {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .debrief-question {
+            background: linear-gradient(135deg, #50E3C2, #4A90E2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .debrief-question:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .post-it {
+            background: #F5A623;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            font-family: 'Glacial Indifference', 'Nunito', sans-serif;
+            font-weight: 600;
+            background: #06D6A0;
+            color: #1a1a1a;
+            border: 2px solid #333;
+            padding: 12px 20px;
+            border-radius: 0;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            box-shadow: 
+                2px 2px 0px #333,
+                4px 4px 0px rgba(0,0,0,0.2);
+            touch-action: manipulation;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        @media (min-width: 768px) {
+            .nav-buttons {
+                margin-top: 30px;
+                gap: 0;
+                flex-wrap: nowrap;
+            }
+            
+            .nav-btn {
+                border: 3px solid #333;
+                padding: 15px 30px;
+                font-size: 1.1em;
+                box-shadow: 
+                    4px 4px 0px #333,
+                    8px 8px 0px rgba(0,0,0,0.2);
+                flex: none;
+            }
+        }
+
+        .nav-btn:hover {
+            background: #E63946;
+            color: #f8f8f8;
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                6px 6px 0px #333,
+                12px 12px 0px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 
+                4px 4px 0px #999,
+                8px 8px 0px rgba(0,0,0,0.1);
+        }
+
+        .scenario-title {
+            font-family: 'Glacial Indifference', 'Nunito', sans-serif;
+            font-weight: 800;
+            text-align: center;
+            color: #1a1a1a;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            text-shadow: 
+                2px 2px 0px #E63946,
+                4px 4px 0px rgba(0,0,0,0.2);
+            position: relative;
+            line-height: 1.2;
+            padding: 0 10px;
+        }
+        
+        @media (min-width: 768px) {
+            .scenario-title {
+                font-size: 2.2em;
+                margin-bottom: 30px;
+                text-shadow: 
+                    3px 3px 0px #E63946,
+                    6px 6px 0px rgba(0,0,0,0.2);
+                padding: 0;
+            }
+        }
+        
+        .scenario-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #FFD166;
+            border: 2px solid #333;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4A90E2, #50E3C2);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Écran d'accueil -->
+        <div class="screen active" id="welcome-screen">
+            <div class="welcome-screen">
+                <h1>🚀 Mission Locale 2034</h1>
+                <p>50 ans d'histoire, 50 ans d'avenir</p>
+                <p style="font-size: 1.1em;">Avancez dans votre scénario, dépassez les contraintes, activez vos ressources.</p>
+                <button class="start-btn" onclick="showScenarioSelection()">🎯 Lancer la partie</button>
+            </div>
+        </div>
+
+        <!-- Sélection des scénarios -->
+        <div class="screen" id="scenario-screen">
+            <h2 style="text-align: center; color: #4A90E2; font-size: 2.5em;">Choisissez votre scénario 2034</h2>
+            <div class="scenario-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="scenario-card" onclick="startScenario('sante')">
+                    <div class="scenario-icon">🧠</div>
+                    <h3>Pôle santé intégrée ML</h3>
+                    <p>Guichet unique santé des jeunes : santé mentale, prévention, accès aux soins</p>
+                </div>
+                <div class="scenario-card" onclick="startScenario('hologramme')">
+                    <div class="scenario-icon">💻</div>
+                    <h3>Conseiller hologramme 24/7</h3>
+                    <p>Bornes holographiques dans chaque point d'accueil du Pays Basque intérieur</p>
+                </div>
+                <div class="scenario-card" onclick="startScenario('citoyen')">
+                    <div class="scenario-icon">🤝</div>
+                    <h3>Maison citoyenne sans écran</h3>
+                    <p>Première maison citoyenne sans smartphone pour recréer du débat</p>
+                </div>
+                <div class="scenario-card" onclick="startScenario('mobile')">
+                    <div class="scenario-icon">🚐</div>
+                    <h3>Mission Locale nomade zéro carbone</h3>
+                    <p>Conseillers itinérants en véhicules électriques dans cafés, stades et médiathèques</p>
+                </div>
+                <div class="scenario-card" onclick="startScenario('laboratoire')">
+                    <div class="scenario-icon">🔬</div>
+                    <h3>Laboratoire métiers émergents</h3>
+                    <p>FabLab des métiers verts et numériques</p>
+                </div>
+                <div class="scenario-card" onclick="startScenario('alternance')">
+                    <div class="scenario-icon">🎓</div>
+                    <h3>Formation en alternance 2034</h3>
+                    <p>Entre entreprise, casque VR et classe virtuelle : les CFA deviennent plateformes</p>
+                </div>
+                <div class="scenario-card" onclick="startScenario('outils')">
+                    <div class="scenario-icon">📱</div>
+                    <h3>Boîte à outils des conseillers 2034</h3>
+                    <p>Tablette-IA qui alerte en temps réel : "Attention, ce jeune décroche."</p>
+                </div>
+                <div class="scenario-card" onclick="startScenario('dispositifs')">
+                    <div class="scenario-icon">🎮</div>
+                    <h3>Dispositifs d'accompagnement 2034</h3>
+                    <p>CEJ, PACEA, contrats jeunes fusionnent en un parcours adaptatif gamifié</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plateau de jeu -->
+        <div class="screen" id="game-screen">
+            <h2 class="scenario-title" id="current-scenario"></h2>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="game-board">
+                <div class="board-path">
+                    <div class="step active" id="step-1" onclick="activateStep(1)">
+                        <div class="step-icon">📍</div>
+                        <div class="step-label">Prise en main</div>
+                    </div>
+                    <div class="step" id="step-2" onclick="activateStep(2)">
+                        <div class="step-icon">🎯</div>
+                        <div class="step-label">Travail équipe</div>
+                    </div>
+                    <div class="step" id="step-3" onclick="activateStep(3)">
+                        <div class="step-icon">🎭</div>
+                        <div class="step-label">Préparation</div>
+                    </div>
+                    <div class="step" id="step-4" onclick="activateStep(4)">
+                        <div class="step-icon">🎤</div>
+                        <div class="step-label">Restitution</div>
+                    </div>
+                </div>
+
+                <div id="step-content">
+                    <!-- Le contenu des étapes sera inséré ici -->
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showScenarioSelection()">🔙 Changer de scénario</button>
+                <button class="nav-btn" id="next-btn" onclick="nextStep()" disabled>Étape suivante ➡️</button>
+                <button class="nav-btn" id="debrief-btn" onclick="showFresque()" style="display: none;">🎉 Projet terminé</button>
+            </div>
+        </div>
+
+        <!-- Fresque collective -->
+        <div class="screen" id="fresque-screen">
+            <h2 style="text-align: center; color: #1a1a1a; font-size: 2.8em; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase; text-shadow: 3px 3px 0px #E63946;">🎨 Notre Mission Locale 2034</h2>
+            <h3 style="text-align: center; color: #666; font-size: 1.5em; margin-bottom: 40px;">Fresque collective</h3>
+            
+            <div style="background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); color: #f8f8f8; padding: 30px; border: 4px solid #FFD166; margin: 30px 0; text-align: center; transform: rotate(-1deg);">
+                <h3 style="color: #FFD166; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase;">🏆 Votre projet est terminé !</h3>
+                <p style="font-size: 1.2em;">Félicitations ! Votre équipe a relevé tous les défis et créé un projet innovant pour 2034.</p>
+                <button class="nav-btn" onclick="addProjectToFresque()" style="background: #06D6A0; margin: 20px;">📌 Ajouter à la fresque</button>
+            </div>
+
+            <div id="fresque-wall" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0; min-height: 200px; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(230, 57, 70, 0.1) 10px, rgba(230, 57, 70, 0.1) 20px); padding: 20px; border: 3px dashed #E63946;">
+                <div style="text-align: center; color: #666; font-style: italic; grid-column: 1 / -1;">
+                    Les projets des équipes apparaîtront ici...
+                </div>
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showDebrief()">💭 Débrief collaboratif</button>
+                <button class="nav-btn" onclick="showScenarioSelection()">🔄 Nouveau scénario</button>
+            </div>
+        </div>
+
+        <!-- Débrief final -->
+        <div class="screen" id="debrief-screen">
+            <h2 style="text-align: center; color: #1a1a1a; font-size: 2.5em; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase; text-shadow: 3px 3px 0px #06D6A0;">🎯 Débrief collaboratif</h2>
+            
+            <div class="debrief-wall">
+                <div class="debrief-question" onclick="addPostIt(1)" style="background: linear-gradient(135deg, #E63946, #FFD166);">
+                    <h3>🤔 Capacité d'adaptation</h3>
+                    <p>Qu'avons-nous appris sur notre capacité d'adaptation ?</p>
+                </div>
+                <div class="debrief-question" onclick="addPostIt(2)" style="background: linear-gradient(135deg, #06D6A0, #E63946);">
+                    <h3>💡 Idées transférables</h3>
+                    <p>Quelles idées sont transférables dès aujourd'hui ?</p>
+                </div>
+                <div class="debrief-question" onclick="addPostIt(3)" style="background: linear-gradient(135deg, #FFD166, #06D6A0);">
+                    <h3>🚀 Nouveaux métiers</h3>
+                    <p>Quels métiers ou compétences nouvelles apparaissent ?</p>
+                </div>
+            </div>
+
+            <div id="post-it-wall">
+                <!-- Les post-its seront ajoutés ici -->
+            </div>
+
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="showWelcome()">🏠 Retour à l'accueil</button>
+                <button class="nav-btn" onclick="showFresque()">🎨 Voir la fresque</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentScenario = '';
+        let currentStep = 1;
+        let gameData = {};
+
+        // Pool global de 25 contraintes et 25 ressources
+        const globalConstraints = [
+            "⚠️ Les jeunes préfèrent les plateformes privées et boudent le service public",
+            "⚠️ Budget formation coupé de 40% suite aux restrictions budgétaires",
+            "⚠️ Pénurie de conseillers qualifiés : 3 départs non remplacés",
+            "⚠️ Fracture numérique : 30% des jeunes n'ont pas accès au haut débit",
+            "⚠️ Concurrence des influenceurs qui donnent des 'conseils carrière'",
+            "⚠️ Réforme administrative qui change tous vos référentiels",
+            "⚠️ Les entreprises locales ferment et délocalisent massivement",
+            "⚠️ Montée de la défiance envers les institutions publiques",
+            "⚠️ Saturation des dispositifs d'aide : listes d'attente de 6 mois",
+            "⚠️ Obsolescence des métiers traditionnels que vous accompagnez",
+            "⚠️ Burn-out collectif de l'équipe face à la charge de travail",
+            "⚠️ Nouvelles normes environnementales qui bloquent vos partenaires",
+            "⚠️ Inflation qui rend inaccessibles les formations qualifiantes",
+            "⚠️ Désertification médicale qui complique l'accompagnement global",
+            "⚠️ Fake news sur les réseaux qui discréditent vos actions",
+            "⚠️ Automatisation qui supprime les emplois que vous proposiez",
+            "⚠️ Crise du logement qui empêche la mobilité des jeunes",
+            "⚠️ Baisse drastique des contrats aidés et dispositifs d'insertion",
+            "⚠️ Fermeture des transports en commun vers les zones d'emploi",
+            "⚠️ Méfiance intergénérationnelle qui divise vos publics",
+            "⚠️ Surcharge administrative : 60% du temps passé en reporting",
+            "⚠️ Précarisation des intervenants extérieurs et formateurs",
+            "⚠️ Concurrence entre territoires qui fragmentent les dispositifs",
+            "⚠️ Évolution trop rapide des compétences numériques demandées",
+            "⚠️ Isolement géographique aggravé par la désertification rurale"
+        ];
+
+        const globalResources = [
+            "💎 Jeune ambassadeur qui mobilise sa communauté sur les réseaux",
+            "💎 Partenariat avec une licorne française de la EdTech",
+            "💎 Subvention Plan de Relance spécial insertion des jeunes",
+            "💎 Réseau d'anciens bénéficiaires devenus entrepreneurs",
+            "💎 Coopération avec Pôle Emploi pour mutualiser les moyens",
+            "💎 Espace de coworking gratuit offert par la région",
+            "💎 Formation certifiante aux métiers du futur financée",
+            "💎 Partenariat avec des influenceurs engagés socialement",
+            "💎 Soutien d'une fondation d'entreprise pour l'innovation sociale",
+            "💎 Équipe de coachs professionnels bénévoles",
+            "💎 Plateforme de matching emploi-formation sur mesure",
+            "💎 Réseau de mentors issus de la diversité",
+            "💎 Partenariat avec des entreprises à mission",
+            "💎 Dispositif de micro-crédit pour financer les projets",
+            "💎 Communauté de makers et fablab pour prototyper",
+            "💎 Accord avec universités pour stages et alternances",
+            "💎 Réseau de psychologues spécialisés jeunes adultes",
+            "💎 Partenariat logement social pour faciliter la mobilité",
+            "💎 Incubateur social qui accompagne vos innovations",
+            "💎 Réseau d'entreprises inclusives qui recrutent",
+            "💎 Fonds d'innovation territoriale débloqué",
+            "💎 Coopération européenne sur l'emploi des jeunes",
+            "💎 Partenariat avec influenceurs orientation professionnelle",
+            "💎 Réseau de pairs aidants formés à l'accompagnement",
+            "💎 Plateforme collaborative de partage de bonnes pratiques"
+        ];
+
+        const jokerCards = [
+            "🎭 Présentez votre projet comme un JT de 2040",
+            "🎤 Faites un pitch façon TEDx en 3 minutes",
+            "🎨 Transformez votre projet en affiche publicitaire",
+            "😂 Présentez-le comme un sketch humoristique",
+            "📱 Imaginez un post TikTok de la Mission Locale en 2034",
+            "🎪 Créez un stand-up comedy sur votre projet",
+            "📺 Réalisez une bande-annonce de film",
+            "🎵 Composez un rap sur votre innovation",
+            "🎬 Tournez une pub décalée de 30 secondes",
+            "🎨 Dessinez une BD en 4 cases"
+        ];
+
+        const scenarios = {
+            sante: {
+                title: "🧠 Pôle santé intégrée ML",
+                context: "La Mission Locale devient en 2034 le guichet unique de la santé des jeunes : santé mentale, prévention, accès aux soins.",
+                details: {
+                    contexte: "Explosion des troubles psy (+30% en 5 ans), saturation des structures de soins, jeunes sans médecin traitant.",
+                    defi: "Comment articuler un pôle santé-emploi avec ARS, CLS et associations locales, sans transformer la ML en centre médico-social bis ?",
+                    disruption: "La ML propose des 'consultations hybrides' avec psychologue en visio + conseiller en présentiel → un nouveau métier : conseiller santé-insertion.",
+                    axes: {
+                        organisation: "Création d'un pôle santé-insertion, formation des conseillers aux enjeux de santé mentale.",
+                        outils: "Consultations hybrides, espaces de bien-être, partenariats avec télémédecine.",
+                        relations: "Articulation psychologue/conseiller, posture face à la souffrance psychique.",
+                        gestion: "Financements ARS/collectivités, mesure d'impact santé-insertion."
+                    }
+                }
+            },
+            hologramme: {
+                title: "💻 Conseiller hologramme 24/7",
+                context: "En 2034, chaque point d'accueil du Pays Basque intérieur dispose d'une borne holographique Mission Locale.",
+                details: {
+                    contexte: "Enclavement persistant, mobilité limitée (moins de 40% des jeunes ont le permis), fracture numérique toujours présente.",
+                    defi: "Comment garantir l'équité territoriale entre un jeune du BAB ultra-connecté et un jeune de la Soule sans réseau ?",
+                    disruption: "L'hologramme devient le premier point de contact, mais derrière, un conseiller réel prend la main → nouvelle articulation humain/IA.",
+                    axes: {
+                        organisation: "Nouveaux rôles pour les conseillers (animation hybride, suivi à distance).",
+                        outils: "Bornes holographiques, messagerie sécurisée, plateformes d'orientation.",
+                        relations: "Confiance jeunes/conseillers dans un contexte digitalisé, équité territoriale.",
+                        gestion: "Coûts d'installation, sécurisation des données, articulation avec France Travail."
+                    }
+                }
+            },
+            citoyen: {
+                title: "🤝 Maison citoyenne sans écran",
+                context: "Une Mission Locale de 2034 lance la première maison citoyenne sans smartphone pour recréer du débat.",
+                details: {
+                    contexte: "Désengagement démocratique massif, abstention des jeunes record, solitude numérique dans les QPV et zones rurales.",
+                    defi: "Comment rendre attractif un lieu où le wifi est volontairement coupé ?",
+                    disruption: "Une 'carte citoyenne jeune' valorise les heures de participation comme des compétences → la citoyenneté devient un capital social reconnu.",
+                    axes: {
+                        organisation: "Création d'un espace citoyenneté, animateurs référents, partenariats élus/associations.",
+                        outils: "Ateliers participatifs hors-ligne, débats, projets collectifs, carte citoyenne.",
+                        relations: "Jeunes/élus/associations, posture d'animation citoyenne, lien social renforcé.",
+                        gestion: "Financements via collectivités, intégration au CEJ/citoyenneté, reconnaissance des compétences."
+                    }
+                }
+            },
+            mobile: {
+                title: "🚐 Mission Locale nomade zéro carbone",
+                context: "Fin des véhicules thermiques + jeunes qui désertent les antennes : les conseillers deviennent nomades et vont dans cafés, stades, médiathèques avec des véhicules électriques.",
+                details: {
+                    contexte: "Double contrainte : transition énergétique imposée + jeunes qui boudent les lieux institutionnels mais fréquentent des espaces sociaux informels (cafés, stades, médiathèques).",
+                    defi: "Comment maintenir la proximité dans les vallées reculées (Garazi-Baigorri, Soule) tout en garantissant confidentialité et suivi administratif hors du bureau ?",
+                    disruption: "La ML devient un réseau de conseillers nomades zéro carbone qui s'appuient sur les tiers-lieux ruraux → nouveau métier : conseiller-facilitateur territorial itinérant.",
+                    axes: {
+                        organisation: "Conseillers itinérants, réseau de points relais, planification territoriale, nouveaux rôles de facilitateur.",
+                        outils: "Véhicules électriques, tablettes durcie, kits d'animation mobile, cloud sécurisé, bornes de recharge.",
+                        relations: "Posture hors bureau, lien de confiance informel, animation de réseau territorial, partenariats tiers-lieux.",
+                        gestion: "Coûts mobilité électrique, reporting adapté, partenariats communes/syndicats mobilité, confidentialité hors les murs."
+                    }
+                }
+            },
+            laboratoire: {
+                title: "🔬 Laboratoire métiers émergents",
+                context: "La Mission Locale devient le FabLab des métiers verts et numériques.",
+                details: {
+                    contexte: "Transition écologique (hydrogène, bois-énergie, économie circulaire) et transition numérique (IA, cybersécurité).",
+                    defi: "Comment embarquer les jeunes basques peu qualifiés dans des filières de pointe ?",
+                    disruption: "Création d'un Lab emploi-formation transfrontalier où jeunes testent métiers via réalité virtuelle + prototypage → nouveaux partenariats CFA, Région et entreprises locales.",
+                    axes: {
+                        organisation: "Création d'un pôle d'observation et expérimentation, partenariats transfrontaliers.",
+                        outils: "FabLabs, simulateurs métiers VR, prototypage, partenariats avec CFA et entreprises.",
+                        relations: "Implication des jeunes dans l'innovation, lien renforcé avec employeurs, coopération transfrontalière.",
+                        gestion: "Financements Région/Europe, valorisation UNML/RPE, mesure d'impact innovation."
+                    }
+                }
+            },
+            alternance: {
+                title: "🎓 Formation en alternance 2034",
+                context: "L'alternance se vit entre entreprise, casque VR et classe virtuelle : les CFA deviennent des plateformes.",
+                details: {
+                    contexte: "Explosion de l'apprentissage (déjà +18% en 2024), mais difficultés pour les jeunes éloignés géographiquement ou scolairement.",
+                    defi: "Comment sécuriser des parcours éclatés entre présence physique, visio et réalité virtuelle ?",
+                    disruption: "Rôle nouveau du conseiller CEP : garant de cohérence entre les morceaux d'un parcours éclaté → la ML devient chef d'orchestre des parcours hybrides.",
+                    axes: {
+                        organisation: "Rôle renforcé du conseiller CEP, coordination des parcours hybrides.",
+                        outils: "VR, plateformes de formation, carnets numériques, suivi de cohérence.",
+                        relations: "Lien jeunes/tuteurs formateurs à distance, accompagnement renforcé.",
+                        gestion: "Articulation avec Région/PRF, reconnaissance des parcours hybrides, financement."
+                    }
+                }
+            },
+            outils: {
+                title: "📱 Boîte à outils des conseillers 2034",
+                context: "Chaque conseiller dispose d'une tablette-IA qui alerte en temps réel : 'Attention, ce jeune décroche.'",
+                details: {
+                    contexte: "Généralisation des dashboards, suivi numérique imposé par RPE/UNML, risque de déshumanisation.",
+                    defi: "Comment garder le lien humain quand l'outil prend l'initiative du diagnostic ?",
+                    disruption: "Le conseiller évolue vers un rôle de coach augmenté : l'IA détecte, mais l'humain accompagne.",
+                    axes: {
+                        organisation: "Nouveaux rôles de coach augmenté, formation aux outils IA, articulation humain/machine.",
+                        outils: "Tablettes-IA, dashboards prédictifs, alertes temps réel, outils de diagnostic augmenté.",
+                        relations: "Préservation du lien humain malgré la technologie, éthique de l'accompagnement augmenté.",
+                        gestion: "Gouvernance des données, formation des équipes, coûts technologiques, respect RGPD."
+                    }
+                }
+            },
+            dispositifs: {
+                title: "🎮 Dispositifs d'accompagnement 2034",
+                context: "CEJ, PACEA, contrats jeunes disparaissent : tout fusionne en un parcours adaptatif gamifié.",
+                details: {
+                    contexte: "Simplification des politiques publiques, unification du CEP, pression budgétaire.",
+                    defi: "Comment maintenir une approche globale (logement, santé, citoyenneté, mobilité) si l'IA privilégie seulement l'emploi ?",
+                    disruption: "La ML devient le gardien de l'approche globale, apportant ce que l'algorithme n'intègre pas : l'humain, l'ancrage territorial, les réalités sociales.",
+                    axes: {
+                        organisation: "Rôle de gardien de l'approche globale, résistance à la réduction algorithmique.",
+                        outils: "Parcours gamifiés, plateformes unifiées, mais préservation des outils d'approche globale.",
+                        relations: "Maintien de l'accompagnement humain global face à la spécialisation algorithmique.",
+                        gestion: "Négociation avec financeurs pour préserver l'approche globale, indicateurs qualitatifs."
+                    }
+                }
+            }
+        };
+
+        function showWelcome() {
+            hideAllScreens();
+            document.getElementById('welcome-screen').classList.add('active');
+        }
+
+        function showScenarioSelection() {
+            hideAllScreens();
+            document.getElementById('scenario-screen').classList.add('active');
+        }
+
+        function showFresque() {
+            hideAllScreens();
+            document.getElementById('fresque-screen').classList.add('active');
+        }
+
+        function showDebrief() {
+            hideAllScreens();
+            document.getElementById('debrief-screen').classList.add('active');
+        }
+
+        function hideAllScreens() {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+        }
+
+        function startScenario(scenarioKey) {
+            currentScenario = scenarioKey;
+            currentStep = 1;
+            gameData = {};
+            
+            document.getElementById('current-scenario').textContent = scenarios[scenarioKey].title;
+            hideAllScreens();
+            document.getElementById('game-screen').classList.add('active');
+            
+            resetSteps();
+            activateStep(1);
+        }
+
+        function resetSteps() {
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step-${i}`);
+                if (step) {
+                    step.classList.remove('active', 'completed');
+                    if (i === 1) step.classList.add('active');
+                }
+            }
+            updateProgress();
+        }
+
+        function activateStep(stepNumber) {
+            if (stepNumber > currentStep + 1) return; // Empêche de sauter des étapes
+            
+            currentStep = stepNumber;
+            
+            // Mise à jour visuelle des étapes
+            for (let i = 1; i <= 4; i++) {
+                const step = document.getElementById(`step-${i}`);
+                if (step) {
+                    step.classList.remove('active', 'completed');
+                    
+                    if (i < stepNumber) {
+                        step.classList.add('completed');
+                    } else if (i === stepNumber) {
+                        step.classList.add('active');
+                    }
+                }
+            }
+            
+            updateProgress();
+            showStepContent(stepNumber);
+        }
+
+        function updateProgress() {
+            const progress = ((currentStep - 1) / 3) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        let drawnConstraint = null;
+        let drawnResource = null;
+        let drawnJoker = null;
+
+        function drawRandomCard(cardArray) {
+            return cardArray[Math.floor(Math.random() * cardArray.length)];
+        }
+
+        function showStepContent(stepNumber) {
+            const content = document.getElementById('step-content');
+            const nextBtn = document.getElementById('next-btn');
+            const debriefBtn = document.getElementById('debrief-btn');
+            
+            nextBtn.style.display = 'block';
+            debriefBtn.style.display = 'none';
+            nextBtn.disabled = true;
+
+            switch(stepNumber) {
+                case 1:
+                    const scenario = scenarios[currentScenario];
+                    content.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #06D6A0 0%, #4A90E2 100%); color: white; padding: 25px; border: 3px solid #333; margin-bottom: 20px; text-align: center; transform: rotate(-1deg);">
+                            <h3 style="margin-bottom: 15px; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase;">📍 Prise en main du scénario (5 min)</h3>
+                            <p style="font-size: 1.2em; font-weight: 500;">${scenario.context}</p>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                            <div style="background: #f8f9fa; padding: 20px; border: 3px solid #E63946; border-radius: 10px;">
+                                <h4 style="color: #E63946; margin-bottom: 10px;">📋 Contexte</h4>
+                                <p style="font-size: 0.95em; line-height: 1.5;">${scenario.details.contexte}</p>
+                            </div>
+                            <div style="background: #f8f9fa; padding: 20px; border: 3px solid #FFD166; border-radius: 10px;">
+                                <h4 style="color: #B8860B; margin-bottom: 10px;">⚡ Défi</h4>
+                                <p style="font-size: 0.95em; line-height: 1.5; font-weight: 500;">${scenario.details.defi}</p>
+                            </div>
+                        </div>
+                        
+                        ${scenario.details.disruption ? `
+                        <div style="background: linear-gradient(135deg, #06D6A0 0%, #4A90E2 100%); color: white; padding: 20px; border: 3px solid #333; border-radius: 10px; margin: 20px 0; text-align: center;">
+                            <h4 style="margin-bottom: 10px; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase;">🚀 Disruption</h4>
+                            <p style="font-size: 1em; line-height: 1.5; font-weight: 500;">${scenario.details.disruption}</p>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="action-area">
+                            <h3>👉 Consignes d'équipe</h3>
+                            <div style="background: #f8f9fa; padding: 20px; border-left: 4px solid #E63946; margin: 15px 0;">
+                                <p><strong>• Identifiez la punchline</strong> (situation de départ)</p>
+                                <p><strong>• Comprenez le contexte et le défi</strong> (pourquoi ce scénario pose question pour la Mission Locale)</p>
+                            </div>
+                            <textarea class="action-textarea" id="vision-text" placeholder="Notez ici vos premières réflexions sur le scénario : punchline, enjeux identifiés, questions qui émergent..."></textarea>
+                        </div>
+                    `;
+                    document.getElementById('vision-text').addEventListener('input', () => {
+                        nextBtn.disabled = document.getElementById('vision-text').value.trim() === '';
+                    });
+                    break;
+                    
+                case 2:
+                    const scenarioStep2 = scenarios[currentScenario];
+                    content.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #E63946 0%, #FFD166 100%); color: white; padding: 25px; border: 3px solid #333; margin-bottom: 20px; text-align: center; transform: rotate(1deg);">
+                            <h3 style="margin-bottom: 15px; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase;">🎯 Travail en équipe (20 min)</h3>
+                            <p style="font-size: 1.2em; font-weight: 500;">"Si ce scénario devenait réalité en 2034, comment la Mission Locale Pays Basque devrait-elle s'organiser pour réussir ?"</p>
+                        </div>
+                        <div class="action-area">
+                            <h3>👉 Réfléchissez ensemble sur 4 dimensions :</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                                <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #E63946;">
+                                    <h4>🏢 Organisation & métiers</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Quels rôles nouveaux, quelles réorganisations internes ?</p>
+                                    <div style="background: #fff3f3; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 0.85em; color: #666;">
+                                        <strong>Piste :</strong> ${scenarioStep2.details.axes.organisation}
+                                    </div>
+                                    <textarea class="action-textarea" id="organization" placeholder="Nouveaux métiers, évolution des postes, organigramme..." style="min-height: 80px;"></textarea>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #FFD166;">
+                                    <h4>🔧 Outils & méthodes</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Quels outils numériques, pédagogiques, partenariaux ?</p>
+                                    <div style="background: #fffbf0; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 0.85em; color: #666;">
+                                        <strong>Piste :</strong> ${scenarioStep2.details.axes.outils}
+                                    </div>
+                                    <textarea class="action-textarea" id="tools" placeholder="Technologies, méthodes d'accompagnement, partenariats..." style="min-height: 80px;"></textarea>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #06D6A0;">
+                                    <h4>👥 Relations humaines</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Comment travailler avec les jeunes, entre collègues, avec les partenaires ?</p>
+                                    <div style="background: #f0fffe; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 0.85em; color: #666;">
+                                        <strong>Piste :</strong> ${scenarioStep2.details.axes.relations}
+                                    </div>
+                                    <textarea class="action-textarea" id="relations" placeholder="Nouvelles modalités relationnelles, communication..." style="min-height: 80px;"></textarea>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #4A90E2;">
+                                    <h4>📊 Gestion & pilotage</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Quelles modalités de financement, de reporting, de gouvernance ?</p>
+                                    <div style="background: #f0f7ff; padding: 10px; margin: 10px 0; border-radius: 5px; font-size: 0.85em; color: #666;">
+                                        <strong>Piste :</strong> ${scenarioStep2.details.axes.gestion}
+                                    </div>
+                                    <textarea class="action-textarea" id="management" placeholder="Budget, indicateurs, gouvernance, reporting..." style="min-height: 80px;"></textarea>
+                                </div>
+                            </div>
+                            <div style="background: #e8f4f8; padding: 15px; border: 2px dashed #4A90E2; margin-top: 20px; text-align: center;">
+                                <p><strong>💡 Astuce :</strong> Pensez toujours au contexte Pays Basque / Réseau Public de l'Emploi / UNML</p>
+                            </div>
+                        </div>
+                    `;
+                    const textareas = ['organization', 'tools', 'relations', 'management'];
+                    textareas.forEach(id => {
+                        document.getElementById(id).addEventListener('input', () => {
+                            const allFilled = textareas.every(textareaId => 
+                                document.getElementById(textareaId).value.trim() !== ''
+                            );
+                            nextBtn.disabled = !allFilled;
+                        });
+                    });
+                    break;
+                    
+                case 3:
+                    content.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #FFD166 0%, #06D6A0 100%); color: #1a1a1a; padding: 25px; border: 3px solid #333; margin-bottom: 20px; text-align: center; transform: rotate(-1deg);">
+                            <h3 style="margin-bottom: 15px; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase;">🎭 Préparez votre restitution (10 min)</h3>
+                            <p style="font-size: 1.2em; font-weight: 500;">Choisissez un format créatif pour présenter votre projet 2034</p>
+                        </div>
+                        <div class="action-area">
+                            <h3>👉 Formats créatifs disponibles :</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+                                <div style="background: #f8f9fa; padding: 15px; border: 2px solid #E63946; border-radius: 10px; cursor: pointer;" onclick="selectFormat('pitch')">
+                                    <h4>🎯 Pitch sérieux</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Présentation comme un mini-projet stratégique devant des élus/financeurs</p>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border: 2px solid #FFD166; border-radius: 10px; cursor: pointer;" onclick="selectFormat('standup')">
+                                    <h4>😂 Stand-up décalé</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Restitution façon humour/absurde mais révélant le fond du problème</p>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border: 2px solid #06D6A0; border-radius: 10px; cursor: pointer;" onclick="selectFormat('journal')">
+                                    <h4>📺 Journal TV 2040</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Annonce comme si c'était une vraie actualité (plateau TV, flash info)</p>
+                                </div>
+                                <div style="background: #f8f9fa; padding: 15px; border: 2px solid #4A90E2; border-radius: 10px; cursor: pointer;" onclick="selectFormat('affiche')">
+                                    <h4>🎨 Affiche ou slogan</h4>
+                                    <p style="font-size: 0.9em; color: #666;">Formule choc ou visuel résumant votre projet</p>
+                                </div>
+                            </div>
+                            <div id="format-selected" style="display: none; background: #e8f4f8; padding: 20px; border: 2px solid #4A90E2; border-radius: 10px; margin: 20px 0;">
+                                <h4>Format sélectionné : <span id="selected-format-name"></span></h4>
+                                <textarea class="action-textarea" id="presentation-prep" placeholder="Préparez votre restitution selon le format choisi..."></textarea>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 4:
+                    content.innerHTML = `
+                        <div style="background: linear-gradient(135deg, #4A90E2 0%, #E63946 100%); color: white; padding: 25px; border: 3px solid #333; margin-bottom: 20px; text-align: center; transform: rotate(1deg);">
+                            <h3 style="margin-bottom: 15px; font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase;">🎤 Restitution en plénière (5 min par équipe)</h3>
+                            <p style="font-size: 1.2em; font-weight: 500;">Présentez votre vision 2034 et inspirez les autres équipes</p>
+                        </div>
+                        <div class="action-area">
+                            <h3>👉 Objectif de votre présentation :</h3>
+                            <div style="background: #f8f9fa; padding: 20px; border-left: 4px solid #E63946; margin: 15px 0;">
+                                <p><strong>• Partager votre vision</strong> de la Mission Locale 2034</p>
+                                <p><strong>• Inspirer les autres équipes</strong> avec vos idées innovantes</p>
+                                <p><strong>• Montrer la faisabilité</strong> de votre projet dans le contexte Pays Basque</p>
+                            </div>
+                            <div style="background: #e8f4f8; padding: 20px; border: 2px dashed #4A90E2; margin: 20px 0; text-align: center;">
+                                <h4>🎯 Checklist de présentation :</h4>
+                                <div style="text-align: left; margin-top: 15px;">
+                                    <p>✅ Contexte et enjeux du scénario clairement exposés</p>
+                                    <p>✅ Organisation & métiers : rôles et évolutions</p>
+                                    <p>✅ Outils & méthodes : innovations concrètes</p>
+                                    <p>✅ Relations humaines : nouvelles modalités</p>
+                                    <p>✅ Gestion & pilotage : gouvernance et financement</p>
+                                    <p>✅ Format créatif respecté et engageant</p>
+                                </div>
+                            </div>
+                            <textarea class="action-textarea" id="final-presentation" placeholder="Finalisez votre présentation : points clés, accroche, conclusion..."></textarea>
+                        </div>
+                    `;
+                    document.getElementById('final-presentation').addEventListener('input', () => {
+                        const hasContent = document.getElementById('final-presentation').value.trim() !== '';
+                        nextBtn.style.display = 'none';
+                        debriefBtn.style.display = hasContent ? 'block' : 'none';
+                    });
+                    nextBtn.style.display = 'none';
+                    break;
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < 4) {
+                activateStep(currentStep + 1);
+            }
+        }
+
+        function addProjectToFresque() {
+            const fresqueWall = document.getElementById('fresque-wall');
+            
+            // Supprimer le message par défaut s'il existe
+            const defaultMessage = fresqueWall.querySelector('div[style*="grid-column"]');
+            if (defaultMessage) {
+                defaultMessage.remove();
+            }
+            
+            const projectCard = document.createElement('div');
+            projectCard.style.cssText = `
+                background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+                border: 3px solid #333;
+                padding: 20px;
+                transform: rotate(${Math.random() * 6 - 3}deg);
+                box-shadow: 5px 5px 0px ${['#E63946', '#FFD166', '#06D6A0'][Math.floor(Math.random() * 3)]}, 10px 10px 0px rgba(0,0,0,0.2);
+                position: relative;
+            `;
+            
+            const colors = ['#E63946', '#FFD166', '#06D6A0'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            projectCard.innerHTML = `
+                <div style="position: absolute; top: -8px; right: -8px; width: 20px; height: 20px; background: ${randomColor}; border-radius: 50%; border: 2px solid #333;"></div>
+                <h4 style="font-family: 'Glacial Indifference', sans-serif; text-transform: uppercase; color: #1a1a1a; margin-bottom: 10px;">${scenarios[currentScenario].title}</h4>
+                <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;"><strong>Contrainte:</strong> ${drawnConstraint ? drawnConstraint.replace('⚠️ ', '') : 'Non définie'}</p>
+                <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;"><strong>Ressource:</strong> ${drawnResource ? drawnResource.replace('💎 ', '') : 'Non définie'}</p>
+                <p style="font-size: 0.9em; color: #666;"><strong>Format:</strong> ${drawnJoker ? drawnJoker.replace(/🎭|🎤|🎨|😂|📱|🎪|📺|🎵|🎬/g, '').trim() : 'Non défini'}</p>
+            `;
+            
+            fresqueWall.appendChild(projectCard);
+            
+            // Animation d'apparition
+            projectCard.style.opacity = '0';
+            projectCard.style.transform += ' scale(0.8)';
+            setTimeout(() => {
+                projectCard.style.transition = 'all 0.5s ease';
+                projectCard.style.opacity = '1';
+                projectCard.style.transform = projectCard.style.transform.replace('scale(0.8)', 'scale(1)');
+            }, 100);
+        }
+
+        function addPostIt(questionNumber) {
+            const questions = [
+                "Capacité d'adaptation",
+                "Idées transférables", 
+                "Nouveaux métiers"
+            ];
+            
+            const response = prompt(`💭 ${questions[questionNumber - 1]}\n\nPartagez votre réflexion :`);
+            
+            if (response && response.trim()) {
+                const postItWall = document.getElementById('post-it-wall');
+                const postIt = document.createElement('div');
+                postIt.style.cssText = `
+                    background: ${['#E63946', '#FFD166', '#06D6A0'][questionNumber - 1]};
+                    color: ${questionNumber === 2 ? '#1a1a1a' : '#f8f8f8'};
+                    padding: 15px;
+                    border: 3px solid #333;
+                    margin: 10px 0;
+                    box-shadow: 4px 4px 0px #333;
+                    transform: rotate(${Math.random() * 6 - 3}deg);
+                    font-family: 'Nunito', sans-serif;
+                `;
+                postIt.innerHTML = `<strong>${questions[questionNumber - 1]} :</strong><br>${response}`;
+                postItWall.appendChild(postIt);
+            }
+        }
+
+        function selectFormat(formatType) {
+            const formats = {
+                'pitch': '🎯 Pitch sérieux',
+                'standup': '😂 Stand-up décalé', 
+                'journal': '📺 Journal TV 2040',
+                'affiche': '🎨 Affiche ou slogan'
+            };
+            
+            // Réinitialiser tous les formats
+            document.querySelectorAll('[onclick^="selectFormat"]').forEach(div => {
+                div.style.background = '#f8f9fa';
+                div.style.transform = 'scale(1)';
+            });
+            
+            // Mettre en évidence le format sélectionné
+            event.target.closest('div').style.background = '#e8f4f8';
+            event.target.closest('div').style.transform = 'scale(1.02)';
+            
+            // Afficher la zone de préparation
+            document.getElementById('format-selected').style.display = 'block';
+            document.getElementById('selected-format-name').textContent = formats[formatType];
+            
+            // Activer le bouton suivant quand du texte est saisi
+            document.getElementById('presentation-prep').addEventListener('input', () => {
+                const nextBtn = document.getElementById('next-btn');
+                nextBtn.disabled = document.getElementById('presentation-prep').value.trim() === '';
+            });
+        }
+
+        // Initialisation
+        showWelcome();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9868dddb610299cc',t:'MTc1OTEyMTQ5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
 
